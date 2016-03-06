@@ -1,6 +1,7 @@
 package lv.llu.bites.dao;
 
 import lv.llu.bites.model.Device;
+import lv.llu.bites.model.Sensor;
 import lv.llu.bites.model.UserSensor;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -27,6 +28,15 @@ public class MainDao {
         final Query query = entityManager.createQuery("SELECT us from UserSensor us");
         result = (List<UserSensor>) query.getResultList();
         return result;
+    }
+
+    public Sensor getSensorsById(Long sensorId) {
+        try {
+            final Sensor sensor = entityManager.find(Sensor.class, sensorId);
+            return sensor;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
 }

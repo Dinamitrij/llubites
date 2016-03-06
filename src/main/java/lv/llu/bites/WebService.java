@@ -2,12 +2,14 @@ package lv.llu.bites;
 
 import lv.llu.bites.dao.MainDao;
 import lv.llu.bites.model.Device;
+import lv.llu.bites.model.Sensor;
 import lv.llu.bites.model.UserSensor;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import java.util.List;
 
@@ -30,6 +32,13 @@ public class WebService {
     @Path("/us")
     public List<UserSensor> getUserSensors() {
         return mainDao.listUserSensors();
+    }
+
+    @GET
+    @Path("/sen/{id}")
+    public Sensor getSensorsById(@PathParam("id") Long sensorId) {
+        final Sensor sensorsById = mainDao.getSensorsById(sensorId);
+        return sensorsById;
     }
 
 }
