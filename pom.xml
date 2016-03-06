@@ -124,7 +124,7 @@
                         <artifactId>maven-war-plugin</artifactId>
                         <version>2.1.1</version>
                         <configuration>
-                            <outputDirectory>../wardeploy/webapps</outputDirectory>
+                            <outputDirectory>../wardeploy/deployments</outputDirectory>
                             <warName>ROOT</warName>
                         </configuration>
                     </plugin>
