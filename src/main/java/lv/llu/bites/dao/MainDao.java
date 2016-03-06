@@ -39,4 +39,12 @@ public class MainDao {
         return result;
     }
 
+    public List<Sensor> listSensorsByIds(List<Long> sensorIds) {
+        List<Sensor> result = new ArrayList<Sensor>();
+        final Query query = entityManager.createQuery("SELECT s FROM Sensor s WHERE s.id IN :sensorIds");
+        query.setParameter("sensorIds", sensorIds);
+        result = (List<Sensor>) query.getResultList();
+        return result;
+    }
+
 }
