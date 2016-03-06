@@ -31,6 +31,14 @@ public class MainDao {
         return result;
     }
 
+    public List<UserSensor> listUserSensorsBySensorId(Long sensorId) {
+        List<UserSensor> result = new ArrayList<UserSensor>();
+        final Query query = entityManager.createQuery("SELECT us FROM UserSensor us WHERE us.idSensor = :sensorId");
+        query.setParameter("sensorId", sensorId);
+        result = (List<UserSensor>) query.getResultList();
+        return result;
+    }
+
     public List<Sensor> listSensorsById(Long sensorId) {
         List<Sensor> result = new ArrayList<Sensor>();
         final Query query = entityManager.createQuery("SELECT s FROM Sensor s WHERE s.id = :sensorId");

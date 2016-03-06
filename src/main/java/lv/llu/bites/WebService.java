@@ -26,7 +26,7 @@ public class WebService {
 
     @GET
     @Path("/dev") // Locally works as: http://localhost:8080/service/rest/dev
-    public Response getBooks() {
+    public Response listDevices() {
         try {
             final List<Device> deviceList = mainDao.listDevices();
             if (deviceList.isEmpty()) {
@@ -41,9 +41,24 @@ public class WebService {
 
     @GET
     @Path("/us/{id}")
-    public Response getUserSensors(@PathParam("id") Long deviceId) {
+    public Response listUserSensors(@PathParam("id") Long deviceId) {
         try {
             final List<UserSensor> userSensorList = mainDao.listUserSensors(deviceId);
+            if (userSensorList.isEmpty()) {
+                return Response.noContent().build();
+            } else {
+                return Response.ok().entity(userSensorList).build();
+            }
+        } catch (Exception e) {
+            return Response.serverError().build();
+        }
+    }
+
+    @GET
+    @Path("/usbys/{id}")
+    public Response listUserSensorsBySensorId(@PathParam("id") Long sensorId) {
+        try {
+            final List<UserSensor> userSensorList = mainDao.listUserSensorsBySensorId(sensorId);
             if (userSensorList.isEmpty()) {
                 return Response.noContent().build();
             } else {
