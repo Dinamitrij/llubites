@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Main data access object
+ */
 @Stateless
 public class MainDao {
 
