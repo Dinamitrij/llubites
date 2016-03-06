@@ -2,8 +2,10 @@ package lv.llu.bites;
 
 import lv.llu.bites.dao.MainDao;
 import lv.llu.bites.model.Device;
+import lv.llu.bites.model.Measurement;
 import lv.llu.bites.model.Sensor;
 import lv.llu.bites.model.UserSensor;
+import lv.llu.bites.utils.UrlDateParam;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -105,7 +107,32 @@ public class WebService {
         } catch (Exception e) {
             return Response.serverError().build();
         }
+    }
 
+    /**
+     * Call this as: /service/rest/measurements?s=11&from=2014-03-13&to=2014-03-14
+     * @param userSensorId
+     * @param fromDate
+     * @param toDate
+     * @return
+     */
+    @GET
+    @Path("/measurements")
+    public Response listMeasurementsByPeriod(@QueryParam("s") Long userSensorId,
+                                             @QueryParam("from") UrlDateParam fromDate,
+                                             @QueryParam("to") UrlDateParam toDate
+    ) {
+
+        try {
+            final List<Measurement> measurementList = mainDao.listMeasurementsByPeriod(userSensorId, fromDate.getDate(), toDate.getDate());
+            if (measurementList.isEmpty()) {
+                return Response.noContent().build();
+            } else {
+                return Response.ok().entity(measurementList).build();
+            }
+        } catch (Exception e) {
+            return Response.serverError().build();
+        }
     }
 
 }

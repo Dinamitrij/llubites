@@ -1,6 +1,7 @@
 package lv.llu.bites.dao;
 
 import lv.llu.bites.model.Device;
+import lv.llu.bites.model.Measurement;
 import lv.llu.bites.model.Sensor;
 import lv.llu.bites.model.UserSensor;
 import javax.ejb.Stateless;
@@ -8,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Stateless
@@ -55,4 +57,16 @@ public class MainDao {
         return result;
     }
 
+    public List<Measurement> listMeasurementsByPeriod(Long userSensorId, Date startDate, Date endDate) {
+        List<Measurement> result = new ArrayList<Measurement>();
+        final Query query =
+            entityManager.createQuery("SELECT m FROM Measurement m " +
+                                      "WHERE m.idUserSensor = :userSensorId " +
+                                      "AND m.date >= :startDate AND m.date <= :endDate");
+        query.setParameter("userSensorId", userSensorId);
+        query.setParameter("startDate", startDate);
+        query.setParameter("endDate", endDate);
+        result = (List<Measurement>) query.getResultList();
+        return result;
+    }
 }
