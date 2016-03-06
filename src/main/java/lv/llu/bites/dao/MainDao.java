@@ -23,20 +23,20 @@ public class MainDao {
         return result;
     }
 
-    public List<UserSensor> listUserSensors() {
+    public List<UserSensor> listUserSensors(Long deviceId) {
         List<UserSensor> result = new ArrayList<UserSensor>();
-        final Query query = entityManager.createQuery("SELECT us from UserSensor us");
+        final Query query = entityManager.createQuery("SELECT us FROM UserSensor us WHERE us.idDevice = :deviceId");
+        query.setParameter("deviceId", deviceId);
         result = (List<UserSensor>) query.getResultList();
         return result;
     }
 
-    public Sensor getSensorsById(Long sensorId) {
-        try {
-            final Sensor sensor = entityManager.find(Sensor.class, sensorId);
-            return sensor;
-        } catch (Exception e) {
-            return null;
-        }
+    public List<Sensor> listSensorsById(Long sensorId) {
+        List<Sensor> result = new ArrayList<Sensor>();
+        final Query query = entityManager.createQuery("SELECT s FROM Sensor s WHERE s.id = :sensorId");
+        query.setParameter("sensorId", sensorId);
+        result = (List<Sensor>) query.getResultList();
+        return result;
     }
 
 }

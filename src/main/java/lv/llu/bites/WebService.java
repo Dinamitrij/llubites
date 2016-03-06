@@ -11,6 +11,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/rest")
@@ -24,21 +25,48 @@ public class WebService {
 
     @GET
     @Path("/dev") // Locally works as: http://localhost:8080/service/rest/dev
-    public List<Device> getBooks() {
-        return mainDao.listDevices();
+    public Response getBooks() {
+        try {
+            final List<Device> deviceList = mainDao.listDevices();
+            if (deviceList.isEmpty()) {
+                return Response.noContent().build();
+            } else {
+                return Response.ok().entity(deviceList).build();
+            }
+        } catch (Exception e) {
+            return Response.serverError().build();
+        }
     }
 
     @GET
-    @Path("/us")
-    public List<UserSensor> getUserSensors() {
-        return mainDao.listUserSensors();
+    @Path("/us/{id}")
+    public Response getUserSensors(@PathParam("id") Long deviceId) {
+        try {
+            final List<UserSensor> userSensorList = mainDao.listUserSensors(deviceId);
+            if (userSensorList.isEmpty()) {
+                return Response.noContent().build();
+            } else {
+                return Response.ok().entity(userSensorList).build();
+            }
+        } catch (Exception e) {
+            return Response.serverError().build();
+        }
     }
 
     @GET
     @Path("/sen/{id}")
-    public Sensor getSensorsById(@PathParam("id") Long sensorId) {
-        final Sensor sensorsById = mainDao.getSensorsById(sensorId);
-        return sensorsById;
+    public Response listSensorsById(@PathParam("id") Long sensorId) {
+        try {
+            final List<Sensor> sensorList = mainDao.listSensorsById(sensorId);
+            if (sensorList.isEmpty()) {
+                return Response.noContent().build();
+            } else {
+                return Response.ok().entity(sensorList).build();
+            }
+        } catch (Exception e) {
+            return Response.serverError().build();
+        }
+
     }
 
 }
