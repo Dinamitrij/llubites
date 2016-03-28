@@ -66,6 +66,11 @@ public class MainDao {
             entityManager.createQuery("SELECT m FROM Measurement m " +
                                       "WHERE m.idUserSensor = :userSensorId " +
                                       "AND m.date >= :startDate AND m.date <= :endDate");
+
+        System.out.println("userSensorId = "+userSensorId);
+        System.out.println("startDate = "+startDate);
+        System.out.println("endDate = "+endDate);
+
         query.setParameter("userSensorId", userSensorId);
         query.setParameter("startDate", startDate);
         query.setParameter("endDate", endDate);
