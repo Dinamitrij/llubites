@@ -5,6 +5,7 @@ import lv.llu.bites.model.Device;
 import lv.llu.bites.model.Measurement;
 import lv.llu.bites.model.Sensor;
 import lv.llu.bites.model.UserSensor;
+import lv.llu.bites.utils.UrlDateAsLongParam;
 import lv.llu.bites.utils.UrlDateParam;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -119,8 +120,8 @@ public class WebService {
     @GET
     @Path("/measurements")
     public Response listMeasurementsByPeriod(@QueryParam("s") Long userSensorId,
-                                             @QueryParam("from") UrlDateParam fromDate,
-                                             @QueryParam("to") UrlDateParam toDate
+                                             @QueryParam("from") UrlDateAsLongParam fromDate,
+                                             @QueryParam("to") UrlDateAsLongParam toDate
     ) {
 
         try {
